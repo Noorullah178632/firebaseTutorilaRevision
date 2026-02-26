@@ -77,4 +77,53 @@ class AuthViewModel extends ChangeNotifier {
       _setLoading(false);
     }
   }
+
+  //phone varification //
+  String? _varificationId;
+  //send otp
+  Future<void> sendOtp(String number, VoidCallback onCodeSend) async {
+    _setLoading(true);
+    try {
+      await _firebaseAuth.verifyPhoneNumber(
+        phoneNumber: number,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          await _firebaseAuth.signInWithCredential(credential);
+          _setLoading(false);
+        },
+        verificationFailed: (FirebaseAuthException error) {
+          _setLoading(false);
+          Utils().toastMessage(error.toString());
+        },
+        codeSent: (String verId, int? resendToken) {
+          _varificationId = verId;
+          onCodeSend();
+        },
+        codeAutoRetrievalTimeout: (String verId) {
+          _varificationId = verId;
+        },
+      );
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  //Varify OTp
+  Future<bool> varifyOTP(String smsCode) async {
+    _setLoading(true);
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: _varificationId!,
+        smsCode: smsCode,
+      );
+      await _firebaseAuth.signInWithCredential(credential);
+      _setLoading(false);
+      return true;
+    } catch (e) {
+      Utils().toastMessage("Invalid OTP");
+
+      return false;
+    } finally {
+      _setLoading(false);
+    }
+  }
 }
