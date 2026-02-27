@@ -1,4 +1,5 @@
 import 'package:firebase_project/utils/utils_methods.dart';
+import 'package:firebase_project/view/posts/add_post_view.dart';
 import 'package:firebase_project/viewModel/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +28,20 @@ class _PostViewState extends State<PostView> {
         },
         child: Icon(Icons.logout),
       ),
-      appBar: AppBar(title: Text("Post")),
+      appBar: AppBar(
+        title: Text("Post"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => AddPostView()),
+              );
+            },
+            icon: Icon(Icons.add),
+          ),
+        ],
+      ),
       body: Center(child: Text("post screen")),
     );
   }

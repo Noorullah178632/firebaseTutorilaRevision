@@ -1,6 +1,7 @@
 import 'package:firebase_project/firebase_options.dart';
 import 'package:firebase_project/view/auth/auth_gates.dart';
 import 'package:firebase_project/viewModel/auth_view_model.dart';
+import 'package:firebase_project/viewModel/real_database_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,7 +12,10 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => AuthViewModel())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => AuthViewModel()),
+        ChangeNotifierProvider(create: (_) => RealDatabaseViewModel()),
+      ],
       child: MyApp(),
     ),
   );

@@ -22,6 +22,7 @@ class _PhoneLoginViewState extends State<PhoneLoginView> {
         children: [
           SizedBox(height: 30.h),
           TextFormField(
+            controller: phoneNumber,
             keyboardType: TextInputType.phone,
             decoration: InputDecoration(hintText: "+1 234 567 789"),
           ),

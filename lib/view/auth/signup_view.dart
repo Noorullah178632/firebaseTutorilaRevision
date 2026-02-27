@@ -1,4 +1,5 @@
 import 'package:firebase_project/view/auth/login_view.dart';
+import 'package:firebase_project/view/posts/post_view.dart';
 import 'package:firebase_project/viewModel/auth_view_model.dart';
 import 'package:firebase_project/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
@@ -124,9 +125,12 @@ class _SignUpViewState extends State<SignUpView> {
                           emailController.text.trim(),
                           passwordController.text.toString(),
                         );
+                        if (!context.mounted) return;
                         if (success) {
-                          emailController.clear();
-                          passwordController.clear();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => PostView()),
+                          );
                         }
                       }
                     },
