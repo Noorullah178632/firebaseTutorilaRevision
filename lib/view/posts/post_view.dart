@@ -1,6 +1,7 @@
 import 'package:firebase_project/utils/utils_methods.dart';
 import 'package:firebase_project/view/posts/add_post_view.dart';
 import 'package:firebase_project/viewModel/auth_view_model.dart';
+import 'package:firebase_project/viewModel/real_database_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,7 +43,33 @@ class _PostViewState extends State<PostView> {
           ),
         ],
       ),
-      body: Center(child: Text("post screen")),
+      body: Center(
+        child: StreamBuilder(
+          stream: context.read<RealDatabaseViewModel>().streamData,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator(color: Colors.blue);
+            }
+            if (snapshot.hasData && snapshot.data!.snapshot.value != null) {
+              final dynamic rawData = snapshot.data!.snapshot.value;
+              Map<dynamic, dynamic> map = rawData as Map<dynamic, dynamic>;
+              List<dynamic> dataList = map.values.toList();
+              return ListView.builder(
+                itemCount: dataList.length,
+                itemBuilder: (context, index) {
+                  final post = dataList[index];
+                  return ListTile(
+                    title: Text(post["Data"] ?? "No title "),
+                    subtitle: Text(post["serverTime"].toString()),
+                  );
+                },
+              );
+            } else {
+              return Center(child: Text("No post yet"));
+            }
+          },
+        ),
+      ),
     );
   }
 }

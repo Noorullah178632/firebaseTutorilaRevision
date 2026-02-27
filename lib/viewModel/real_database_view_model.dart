@@ -13,6 +13,10 @@ class RealDatabaseViewModel extends ChangeNotifier {
 
   //instance of realDatabase
   final FirebaseDatabase _instance = FirebaseDatabase.instance;
+  // Inside RealDatabaseViewModel
+  final DatabaseReference _dbRef = FirebaseDatabase.instance.ref("Post");
+  //to get data we use streams
+  Stream<DatabaseEvent> get streamData => _dbRef.onValue;
 
   //make function to add data in real data base
   Future<bool> addData(String data) async {
