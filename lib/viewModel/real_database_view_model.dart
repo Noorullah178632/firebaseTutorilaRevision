@@ -13,15 +13,18 @@ class RealDatabaseViewModel extends ChangeNotifier {
 
   //instance of realDatabase
   final FirebaseDatabase _instance = FirebaseDatabase.instance;
+
   //make function to add data in real data base
   Future<bool> addData(String data) async {
     _setLoading(true);
     try {
-      await _instance.ref("Post").push().set({
-        "Data": data,
-
-        "serverTime": ServerValue.timestamp,
-      });
+      await _instance
+          .ref("Post")
+          .push()
+          .set({"Data": data, "serverTime": ServerValue.timestamp})
+          .then((value) {
+            Utils().toastMessage("Data added successfully", value: true);
+          });
       return true;
     } catch (e) {
       Utils().toastMessage(e.toString());

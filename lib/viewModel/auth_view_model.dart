@@ -22,7 +22,7 @@ class AuthViewModel extends ChangeNotifier {
         email: email,
         password: password,
       );
-      Utils().toastMessage("Successfully Signed Up");
+      Utils().toastMessage("Successfully Signed Up", value: true);
       return true;
 
       // Success logic (e.g., navigating) happens in the View
@@ -47,7 +47,7 @@ class AuthViewModel extends ChangeNotifier {
         email: email,
         password: password,
       );
-      Utils().toastMessage("Successfully Login");
+      Utils().toastMessage("Successfully Login", value: true);
 
       return true;
 
@@ -70,7 +70,7 @@ class AuthViewModel extends ChangeNotifier {
   Future<void> signOut() async {
     try {
       await _firebaseAuth.signOut();
-      Utils().toastMessage("Successfully Signed Out");
+      Utils().toastMessage("Successfully Signed Out", value: true);
     } catch (e) {
       Utils().toastMessage("Log Out Failed:${e.toString()}");
     } finally {

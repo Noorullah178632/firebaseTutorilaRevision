@@ -3,13 +3,13 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class Utils {
   //make a method for toast message
-  void toastMessage(String message) {
+  void toastMessage(String message, {bool value = false}) {
     Fluttertoast.showToast(
       msg: message,
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: Colors.red,
+      backgroundColor: value ? Colors.green : Colors.red,
       textColor: Colors.white,
       fontSize: 16.0,
     );
