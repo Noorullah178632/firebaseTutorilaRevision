@@ -73,6 +73,13 @@ class _PostViewState extends State<PostView> {
                         return ListTile(
                           title: Text(post["Data"] ?? "No title "),
                           subtitle: Text(post["serverTime"].toString()),
+                          trailing: PopupMenuButton(
+                            itemBuilder: (context) => [
+                              PopupMenuItem(value: 1, child: Text("Edit")),
+
+                              PopupMenuItem(value: 2, child: Text("Delete")),
+                            ],
+                          ),
                         );
                       },
                     ),
