@@ -54,15 +54,30 @@ class _PostViewState extends State<PostView> {
               final dynamic rawData = snapshot.data!.snapshot.value;
               Map<dynamic, dynamic> map = rawData as Map<dynamic, dynamic>;
               List<dynamic> dataList = map.values.toList();
-              return ListView.builder(
-                itemCount: dataList.length,
-                itemBuilder: (context, index) {
-                  final post = dataList[index];
-                  return ListTile(
-                    title: Text(post["Data"] ?? "No title "),
-                    subtitle: Text(post["serverTime"].toString()),
-                  );
-                },
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hint: Text("search data"),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: dataList.length,
+                      itemBuilder: (context, index) {
+                        final post = dataList[index];
+                        return ListTile(
+                          title: Text(post["Data"] ?? "No title "),
+                          subtitle: Text(post["serverTime"].toString()),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               );
             } else {
               return Center(child: Text("No post yet"));
